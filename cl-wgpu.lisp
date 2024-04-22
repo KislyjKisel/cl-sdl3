@@ -6,7 +6,7 @@
 
 (defun get-wgpu-surface (window wgpu-instance &optional (wgpu-surface-label (cffi:null-pointer)))
   #+linux
-  (if (string= (cffi:foreign-string-to-lisp (%sdl3:get-current-video-driver))
+  (if (string= (%sdl3:get-current-video-driver)
                "x11")
       (let ((surf-desc (autowrap:calloc '%wgpu:surface-descriptor))
             (surf-desc-x11 (autowrap:calloc '%wgpu:surface-descriptor-from-xlib-window))
