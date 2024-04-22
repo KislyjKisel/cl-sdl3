@@ -1,5 +1,5 @@
 (asdf:defsystem #:cl-sdl3
-    :depends-on (#:trivial-features #:cl-autowrap/libffi)
+    :depends-on (#:cl-autowrap/libffi)
     :serial t
     :components ((:module c-src
                   :pathname "SDL/include/SDL3"
@@ -13,3 +13,9 @@
                                (:file "autowrap")
                                (:file "wrapped")))))
 
+(asdf:defsystem #:cl-sdl3/cl-wgpu
+    :depends-on (#:trivial-features
+                 #:cl-autowrap/libffi
+                 #:cl-sdl3
+                 #:cl-wgpu)
+    :components ((:file "cl-wgpu")))
