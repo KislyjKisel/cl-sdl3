@@ -1,5 +1,5 @@
 (asdf:defsystem #:cl-sdl3
-    :depends-on (#:cl-autowrap/libffi)
+    :depends-on (#:trivial-features #:cl-autowrap/libffi)
     :serial t
     :components ((:module c-src
                   :pathname "SDL/include/SDL3"
