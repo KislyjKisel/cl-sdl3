@@ -1,5 +1,6 @@
 (in-package #:sdl3)
 
+(export 'get-window-size)
 (defun get-window-size (window)
   (let ((window-size (cffi:foreign-alloc :int :count 2)))
     (%sdl3:get-window-size window
@@ -10,6 +11,7 @@
       (cffi:foreign-free window-size)
       (values window-width window-height))))
 
+(export 'get-window-size-in-pixels)
 (defun get-window-size-in-pixels (window)
   (let ((window-size (cffi:foreign-alloc :int :count 2)))
     (%sdl3:get-window-size-in-pixels window
