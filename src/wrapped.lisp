@@ -22,6 +22,37 @@
       (cffi:foreign-free window-size)
       (values window-width window-height))))
 
+
+;;; Keys
+
+(export 'keymod)
+(deftype keymod ()
+  '(unsigned-byte 16))
+
+(export '(+kmod-none+
+          +kmod-lshift+ +kmod-rshift+ +kmod-lctrl+ +kmod-rctrl+
+          +kmod-lalt+ +kmod-ralt+ +kmod-lgui+ +kmod-rgui+
+          +kmod-num+ +kmod-caps+ +kmod-mode+ +kmod-scroll+
+          +kmod-ctrl+ +kmod-shift+ +kmod-alt+ +kmod-gui+))
+(defconstant +kmod-none+ #x0000 "No modifier is applicable")
+(defconstant +kmod-lshift+ #x0001)
+(defconstant +kmod-rshift+ #x0002)
+(defconstant +kmod-lctrl+ #x0040)
+(defconstant +kmod-rctrl+ #x0080)
+(defconstant +kmod-lalt+ #x0100)
+(defconstant +kmod-ralt+ #x0200)
+(defconstant +kmod-lgui+ #x0400 "Left GUI key (often Windows key)")
+(defconstant +kmod-rgui+ #x0800 "Right GUI key (often Windows key)")
+(defconstant +kmod-num+ #x1000 "Num Lock key (may be located on an extended keypad)")
+(defconstant +kmod-caps+ #x2000 "Caps Lock key")
+(defconstant +kmod-mode+ #x4000 "AltGr key")
+(defconstant +kmod-scroll+ #x8000 "Scroll Lock key")
+(defconstant +kmod-ctrl+ (logior +kmod-lctrl+ +kmod-rctrl+) "Any Ctrl key")
+(defconstant +kmod-shift+ (logior +kmod-lshift+ +kmod-rshift+) "Any Shift key")
+(defconstant +kmod-alt+ (logior +kmod-lalt+ +kmod-ralt+) "Any Alt key (excluding AltGr)")
+(defconstant +kmod-gui+ (logior +kmod-lgui+ +kmod-rgui+) "Any GUI key")
+
+
 ;;; Properties
 
 (defmacro define-property-name-allocs (symbol-name-pairs)
