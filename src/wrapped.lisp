@@ -2,25 +2,45 @@
 
 (export 'get-window-size)
 (defun get-window-size (window)
-  (let ((window-size (cffi:foreign-alloc :int :count 2)))
-    (%sdl3:get-window-size window
-                           (cffi:mem-aptr window-size :int 0)
-                           (cffi:mem-aptr window-size :int 1))
-    (let ((window-width (cffi:mem-aref window-size :int 0))
-          (window-height (cffi:mem-aref window-size :int 1)))
-      (cffi:foreign-free window-size)
-      (values window-width window-height))))
+  (cffi:with-foreign-object (window-size :int 2)
+    (let ((res (%sdl3:get-window-size window
+                                      (cffi:mem-aptr window-size :int 0)
+                                      (cffi:mem-aptr window-size :int 1))))
+      (values
+        (cffi:mem-aref window-size :int 0)
+        (cffi:mem-aref window-size :int 1)
+        res))))
 
 (export 'get-window-size-in-pixels)
 (defun get-window-size-in-pixels (window)
-  (let ((window-size (cffi:foreign-alloc :int :count 2)))
-    (%sdl3:get-window-size-in-pixels window
-                                     (cffi:mem-aptr window-size :int 0)
-                                     (cffi:mem-aptr window-size :int 1))
-    (let ((window-width (cffi:mem-aref window-size :int 0))
-          (window-height (cffi:mem-aref window-size :int 1)))
-      (cffi:foreign-free window-size)
-      (values window-width window-height))))
+  (cffi:with-foreign-object (window-size :int 2)
+    (let ((res (%sdl3:get-window-size-in-pixels window
+                                                (cffi:mem-aptr window-size :int 0)
+                                                (cffi:mem-aptr window-size :int 1))))
+      (values
+        (cffi:mem-aref window-size :int 0)
+        (cffi:mem-aref window-size :int 1)
+        res))))
+
+(export 'get-mouse-state)
+(defun get-mouse-state ()
+  (cffi:with-foreign-object (mouse-state :float 2)
+    (let ((button (%sdl3:get-mouse-state (cffi:mem-aptr mouse-state :float 0)
+                                         (cffi:mem-aptr mouse-state :float 1))))
+      (values
+        (cffi:mem-aref mouse-state :float 0)
+        (cffi:mem-aref mouse-state :float 1)
+        button))))
+
+(export 'get-relative-mouse-state)
+(defun get-relative-mouse-state ()
+  (cffi:with-foreign-object (mouse-state :float 2)
+    (let ((button (%sdl3:get-relative-mouse-state (cffi:mem-aptr mouse-state :float 0)
+                                                  (cffi:mem-aptr mouse-state :float 1))))
+      (values
+        (cffi:mem-aref mouse-state :float 0)
+        (cffi:mem-aref mouse-state :float 1)
+        button))))
 
 
 ;;; Keys
