@@ -1,5 +1,16 @@
 (in-package #:sdl3)
 
+(export 'get-window-position)
+(defun get-window-position (window)
+  (cffi:with-foreign-object (window-position :int 2)
+    (let ((res (%sdl3:get-window-position window
+                                          (cffi:mem-aptr window-position :int 0)
+                                          (cffi:mem-aptr window-position :int 1))))
+      (values
+        (cffi:mem-aref window-position :int 0)
+        (cffi:mem-aref window-position :int 1)
+        res))))
+
 (export 'get-window-size)
 (defun get-window-size (window)
   (cffi:with-foreign-object (window-size :int 2)
@@ -37,6 +48,16 @@
   (cffi:with-foreign-object (mouse-state :float 2)
     (let ((button (%sdl3:get-relative-mouse-state (cffi:mem-aptr mouse-state :float 0)
                                                   (cffi:mem-aptr mouse-state :float 1))))
+      (values
+        (cffi:mem-aref mouse-state :float 0)
+        (cffi:mem-aref mouse-state :float 1)
+        button))))
+
+(export 'get-global-mouse-state)
+(defun get-global-mouse-state ()
+  (cffi:with-foreign-object (mouse-state :float 2)
+    (let ((button (%sdl3:get-global-mouse-state (cffi:mem-aptr mouse-state :float 0)
+                                                (cffi:mem-aptr mouse-state :float 1))))
       (values
         (cffi:mem-aref mouse-state :float 0)
         (cffi:mem-aref mouse-state :float 1)
